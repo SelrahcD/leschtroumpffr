@@ -1,0 +1,24 @@
+{
+  "name": "le-schtroupmpf",
+  "private": true,
+  "version": "0.0.0",
+  "description": "A Schtroupmpf bot for Twitter",
+  "dependencies": {
+    "cheerio": "^0.17.0",
+    "form-data": "^0.1.4",
+    "iconv": "^2.1.4",
+    "iconv-lite": "^0.4.4",
+    "node-icu-charset-detector": "0.0.7",
+    "node-promise": "0.5.4",
+    "request": "^2.40.0",
+    "twit": "1.1.18"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "debug": "node debug app.js"
+  },
+  "main": "app.js",
+  "repository": "",
+  "author": "SelrahcD <c.desneuf@gmail.com>",
+  "license": ""
+}
