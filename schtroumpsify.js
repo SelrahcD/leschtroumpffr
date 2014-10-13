@@ -32,7 +32,8 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 			VPR: 0.4,
 			ADV: 0.6,
 			NC: 0.9,
-			ADJ: 1
+			ADJ: 1,
+			NPP: 1.3 // This is bullshit. We can't get here... Just a reminder we shoudl handle that type
 		},
 		tokenCount = tokens.length;
 
@@ -49,7 +50,6 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 				
 			testedTokenCount++;
 
-
 			if(token.subtype === 'ADV') { // Adverbe
 				wasReplaced = handleAdverbe(token, replacements);
 			}
@@ -59,7 +59,7 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 			else if(token.subtype === 'ADJ') { //Adjectif
 				wasReplaced = handleAdjective(token, replacements);
 			}
-			else if(token.subtype === 'NC') { // Nom commun
+			else if(token.subtype === 'NC' || token.subtype === 'NPP') { // Nom commun
 
 				wasReplaced = handleNoun(token, replacements, token.previousToken, token.antepToken);
 			}
@@ -119,12 +119,14 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 			}
 		}
 
+		console.log(dico);
+
 		return dico;
 	}
 
 	function getType()
 	{
-		var types = ['V', 'VPP', 'VPR', 'ADV', 'NC', 'ADJ'];
+		var types = ['V', 'VPP', 'VPR', 'ADV', 'NC', 'NPP', 'ADJ'];
 		var i = Math.floor(Math.random() * (types.length));
 
 		return types[i];
