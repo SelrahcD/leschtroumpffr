@@ -234,6 +234,9 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 	}
 
 	function createReplacement(oldWord, newWord) {
+		if(oldWord[0] === oldWord[0].toUpperCase()) {
+			newWord = newWord.charAt(0).toUpperCase() + newWord.substring(1)
+		}
 		return {
 			oldWord: oldWord,
 			newWord: newWord
