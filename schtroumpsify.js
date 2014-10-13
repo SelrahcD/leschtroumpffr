@@ -119,14 +119,12 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 			}
 		}
 
-		console.log(dico);
-
 		return dico;
 	}
 
 	function getType()
 	{
-		var types = ['V', 'VPP', 'VPR', 'ADV', 'NC', 'NPP', 'ADJ'];
+		var types = ['V', 'VPP', 'VPR', 'ADV', 'NC', 'ADJ'];
 		var i = Math.floor(Math.random() * (types.length));
 
 		return types[i];
@@ -199,6 +197,10 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 	function handleNoun(noun, replacements, previousToken, antepToken) {
 
 		if(!isNaN(noun.text)) {
+			return false;
+		}
+
+		if(noun.text[0] === '#') {
 			return false;
 		}
 
