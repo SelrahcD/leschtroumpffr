@@ -1,8 +1,8 @@
 module.exports = {
 	ns: 'schtroumpf',
 	np: 'schtroumpfs',
-	as: 'schtroumpfé',
-	ap: 'schtroumpfés',
+	as: 'schtroumpf',
+	ap: 'schtroumpfs',
 	adv: 'schtroufement',
 	inf: 'schtroumpfer',
 	pp: 'schtroumpfant',
