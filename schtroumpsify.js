@@ -208,6 +208,10 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 		else if(previousToken && previousToken.text.toLowerCase() === "l'") {
 			replacements.push(createReplacement(previousToken.text, previousToken.base + ' ')); // Not bullet proof for genre detection...
 		}
+		else if(previousToken && previousToken.text.toLowerCase() === "d'")
+		{
+			replacements.push(createReplacement(previousToken.text, previousToken.base + ' '));
+		}
 
 		var newWord = noun.data.n === 'p' ? self.language.np : self.language.ns;
 		replacements.push(createReplacement(noun.text, newWord));
