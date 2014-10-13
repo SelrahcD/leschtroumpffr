@@ -185,7 +185,11 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 		if(typeof self.language[verb.data.m] !== 'undefined' 
 			&& typeof self.language[verb.data.m][verb.data.t] !== 'undefined' 
 			&& typeof self.language[verb.data.m][verb.data.t][verb.data.p] !== 'undefined') {
-			replacements.push(createReplacement(verb.text, self.language[verb.data.m][verb.data.t][verb.data.p]));
+			var p = verb.data.p;
+			if(verb.data.n === 'p') {
+				p += 3;
+			}
+			replacements.push(createReplacement(verb.text, self.language[verb.data.m][verb.data.t][p]));
 			return true;
 		}
 	}
