@@ -71,6 +71,10 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 		}
 	}
 
+	if(replacements.length === 0) {
+		throw new Error("No replacements");
+	}
+
 	return replacements;
 
 	function classTokens(tokens)
@@ -125,7 +129,7 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 
 		return types[i];
 	}
-	
+
 	// function getType(distribution)
 	// {
 	// 	rand = Math.random();

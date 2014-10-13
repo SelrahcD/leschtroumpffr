@@ -20,20 +20,26 @@ twitterClient.stream('statuses/filter', {follow: [24744541]}).on('tweet', functi
 		});
 
 
-	    schtroumpsifier.transform(tweet.text).then(function(text) {
+		try {
+			schtroumpsifier.transform(tweet.text).then(function(text) {
 	    	
-	    	// tweet
-	    	console.log(text);
-			var i = 0;
-		 	urls.forEach(function(url) {
-				text = text.replace('#'+i++, url);
-			});
-	    	twitterClient.post('statuses/update', { status: text }, function(err, data, response) {
-				  // console.log(data)
-			});
-	    },
-	    function() {
-	    	console.log('Fail on ' + tweet.text);
-	    });
+		    	// tweet
+		    	console.log(text);
+				var i = 0;
+			 	urls.forEach(function(url) {
+					text = text.replace('#'+i++, url);
+				});
+		    	twitterClient.post('statuses/update', { status: text }, function(err, data, response) {
+					  // console.log(data)
+				});
+		    },
+		    function() {
+		    	console.log('Fail on ' + tweet.text);
+		    });
+		}
+		catch(e) {
+			console.log(e.message);
+		}
+	    
 	}
 });
