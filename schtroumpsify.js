@@ -26,15 +26,16 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 	var self = this,
 		replacements = [],
 		maxReplacements = 1,
-		allowed = {
-			V: 0.2,
-			VPP: 0.3,
-			VPR: 0.4,
-			ADV: 0.6,
-			NC: 0.9,
-			ADJ: 1,
-			NPP: 1.3 // This is bullshit. We can't get here... Just a reminder we shoudl handle that type
-		},
+		// allowed = {
+		// 	V: 0.2,
+		// 	VPP: 0.3,
+		// 	VPR: 0.4,
+		// 	ADV: 0.6,
+		// 	NC: 0.9,
+		// 	ADJ: 1,
+		// 	NPP: 1.3 // This is bullshit. We can't get here... Just a reminder we shoudl handle that type
+		// },
+		allowed = ['V', 'VPP', 'VPR', 'ADV', 'NC', 'ADJ'],
 		tokenCount = tokens.length;
 
 	tokens = classTokens(tokens);
@@ -122,10 +123,14 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 		return dico;
 	}
 
-	function getType()
+	function getType(types)
 	{
-		var types = ['V', 'VPP', 'VPR', 'ADV', 'NC', 'ADJ'];
+		if(types.length === 0) {
+			throw new Error("Tested all types...");
+		}
+
 		var i = Math.floor(Math.random() * (types.length));
+		types.splice(i, 1);
 
 		return types[i];
 	}
