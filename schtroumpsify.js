@@ -118,15 +118,23 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 		return dico;
 	}
 
-	function getType(distribution)
+	function getType()
 	{
-		rand = Math.random();
-		for(var key in distribution) {
-			if(rand < distribution[key]) {
-				return key;
-			}
-		}
+		var types = ['V', 'VPP', 'VPR', 'ADV', 'NC', 'ADJ'];
+		var i = Math.floor(Math.random() * (types.length));
+
+		return types[i];
 	}
+	
+	// function getType(distribution)
+	// {
+	// 	rand = Math.random();
+	// 	for(var key in distribution) {
+	// 		if(rand < distribution[key]) {
+	// 			return key;
+	// 		}
+	// 	}
+	// }
 
 	function handleVerb(verb, replacements, previousToken, nextToken) {
 		var mode,
