@@ -201,13 +201,15 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 		}
 
 		// De l' => Du
-		if(previousToken && antepToken && previousToken.text.toLowerCase() === "l'" && antepToken.text.toLowerCase === 'de') {
-			replacements.push(createReplacement(antepToken.text, antepToken.text[0] + 'u '));
+		if(previousToken && antepToken && previousToken.text.toLowerCase() === "l\'" && antepToken.text.toLowerCase() === 'de') {
+			replacements.push(createReplacement(antepToken.text, antepToken.text[0] + 'u'));
 			replacements.push(createReplacement(previousToken.text, ''));
 		}
+		// l' => le / la
 		else if(previousToken && previousToken.text.toLowerCase() === "l'") {
 			replacements.push(createReplacement(previousToken.text, previousToken.base + ' ')); // Not bullet proof for genre detection...
 		}
+		// d' => de
 		else if(previousToken && previousToken.text.toLowerCase() === "d'")
 		{
 			replacements.push(createReplacement(previousToken.text, previousToken.base + ' '));
