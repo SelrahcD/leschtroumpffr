@@ -185,7 +185,7 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 		if(typeof self.language[verb.data.m] !== 'undefined' 
 			&& typeof self.language[verb.data.m][verb.data.t] !== 'undefined' 
 			&& typeof self.language[verb.data.m][verb.data.t][verb.data.p] !== 'undefined') {
-			var p = verb.data.p;
+			var p = parseInt(verb.data.p);
 			if(verb.data.n === 'p') {
 				p += 3;
 			}
