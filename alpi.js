@@ -74,12 +74,14 @@ RemoteParseur.prototype.parse = function(text) {
 				token.type = elements[3];
 				token.subtype = elements[4];
 
-				var allData = elements[5].split('|');
+				if(elements[5]) {
+					var allData = elements[5].split('|');
 				var data = {};
-				allData.forEach(function(d) {
-					var splitted = d.split('=');
-					data[splitted[0]] = splitted[1];
-				});
+					allData.forEach(function(d) {
+						var splitted = d.split('=');
+						data[splitted[0]] = splitted[1];
+					});
+				}
 
 				token.data = data;
 
