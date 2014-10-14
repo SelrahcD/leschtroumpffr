@@ -130,9 +130,10 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 		}
 
 		var i = Math.floor(Math.random() * (types.length));
+		var t = types[i];
 		types.splice(i, 1);
 
-		return types[i];
+		return t;
 	}
 
 	// function getType(distribution)
