@@ -91,6 +91,9 @@ RemoteParseur.prototype.parse = function(text) {
 			promise.resolve(tokens);
 	});
 
+	var urlRegex = /(https?:\/\/[^\s]+)/g;
+	text = text.replace(urlRegex, '');
+
 	form = r.form();
 	form.append('grammar', 'frmgtel');
 	form.append('forest', 'conll'); 
