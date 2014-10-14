@@ -43,7 +43,7 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 	var testedTokenCount = 0;
 	while(replacements.length < maxReplacements && testedTokenCount < tokenCount) {
 		var type = getType(allowed);
-
+		
 		if(typeof tokens[type] !== 'undefined') {
 			var index = Math.floor(Math.random() * (tokens[type].length)),
 				token = tokens[type][index],

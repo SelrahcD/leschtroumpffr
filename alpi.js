@@ -94,6 +94,9 @@ RemoteParseur.prototype.parse = function(text) {
 	var urlRegex = /(https?:\/\/[^\s]+)/g;
 	text = text.replace(urlRegex, '');
 
+	var crochayRegex = /\[.+\]/g;
+	text = text.replace(crochayRegex, '');
+
 	form = r.form();
 	form.append('grammar', 'frmgtel');
 	form.append('forest', 'conll'); 
