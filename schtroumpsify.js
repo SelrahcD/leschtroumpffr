@@ -43,7 +43,8 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 	var testedTokenCount = 0;
 	while(replacements.length < maxReplacements && testedTokenCount < tokenCount) {
 		var type = getType(allowed);
-		
+
+
 		if(typeof tokens[type] !== 'undefined') {
 			var index = Math.floor(Math.random() * (tokens[type].length)),
 				token = tokens[type][index],
@@ -64,11 +65,8 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 
 				wasReplaced = handleNoun(token, replacements, token.previousToken, token.antepToken);
 			}
-
-			if(wasReplaced) {
-				tokens[type].splice(index, 1);
-			}
-
+			
+			tokens[type].splice(index, 1);
 		}
 	}
 
