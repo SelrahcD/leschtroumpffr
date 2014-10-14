@@ -33,8 +33,8 @@ twitterClient.stream('statuses/filter', {follow: [24744541]}).on('tweet', functi
 					  // console.log(data)
 				});
 		    },
-		    function(e) {
-		    	console.log('Fail on ' + tweet.text + ' ' + e.getMessage());
+		    function() {
+		    	console.log('Fail on ' + tweet.text);
 		    });
 		}
 		catch(e) {
