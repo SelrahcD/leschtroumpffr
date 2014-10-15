@@ -43,6 +43,7 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 	while(replacements.length < maxReplacements && testedTokenCount < tokenCount) {
 		var type = getType(allowed);
 
+		console.log(type);
 
 		if(typeof tokens[type] !== 'undefined') {
 			var index = Math.floor(Math.random() * (tokens[type].length)),
@@ -70,6 +71,7 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 	}
 
 	if(replacements.length === 0) {
+		console.log('No replacements');
 		throw new Error("No replacements");
 	}
 
@@ -125,6 +127,7 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 	function getType(types)
 	{
 		if(types.length === 0) {
+			console.log('Tested all types');
 			throw new Error("Tested all types...");
 		}
 
