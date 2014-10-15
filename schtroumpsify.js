@@ -150,7 +150,7 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 			person;
 
 		// If next verb is VPP use it instead of current one.
-		if(nextToken && nextToken.subtype === 'VPP') {
+		if(nextToken && (nextToken.subtype === 'VPP' || nextToken.subtype === 'VINF')) {
 			return false;
 		}
 
