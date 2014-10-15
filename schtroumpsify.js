@@ -35,7 +35,7 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 		// 	ADJ: 1,
 		// 	NPP: 1.3 // This is bullshit. We can't get here... Just a reminder we shoudl handle that type
 		// },
-		allowed = ['V', 'VPP', 'VPR', 'ADV', 'NC', 'ADJ'],
+		allowed = ['V', 'VPP', 'VPR', 'VINF', 'ADV', 'NC', 'ADJ'],
 		tokenCount = tokens.length;
 
 	tokens = classTokens(tokens);
@@ -157,6 +157,11 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 		// If previous token is j' change it to je
 		if(previousToken && previousToken.text.toLowerCase() === "j'") {
 			replacements.push(createReplacement(previousToken.text, previousToken.text[0] + 'e '));
+		}
+
+		if(verb.subtype === 'VINF') {
+			replacements.push(createReplacement(verb.text, self.language.inf));
+			return true;
 		}
 
 		if(verb.subtype === 'VPP') {
