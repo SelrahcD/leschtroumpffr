@@ -253,7 +253,30 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 			return false;
 		}
 
-		var newWord = adjective.data.n === 'p' ? self.language.ap : self.language.as;
+		var newWord = null;
+		if(adjective.text[adjective.text.length - 1] === 's' 
+			&& adjective.text[adjective.text.length - 2] === 'e' 
+			&& adjective.text[adjective.text.length - 3] === 'é') {
+			newWord = self.language.a_ées;
+		}
+		else if(adjective.text[adjective.text.length - 1] === 's' 
+			&& adjective.text[adjective.text.length - 2] === 'é')
+		{
+			newWord = self.language.a_és;
+		}
+		else if(adjective.text[adjective.text.length - 1] === 'e' 
+			&& adjective.text[adjective.text.length - 2] === 'é')
+		{
+			newWord = self.language.a_ée;
+		}
+		else if(adjective.text[adjective.text.length - 1] === 'é')
+		{
+			newWord = self.language.a_é;
+		}
+		else {
+			newWord = adjective.data.n === 'p' ? self.language.ap : self.language.as;
+		}
+
 		replacements.push(createReplacement(adjective.text, newWord));
 		return true;
 	}
