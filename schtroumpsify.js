@@ -229,6 +229,11 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 	}
 
 	function handleAdjective(adjective, replacements) {
+		
+		if(!isNaN(adjective.text)) {
+			return false;
+		}
+
 		var newWord = adjective.data.n === 'p' ? self.language.ap : self.language.as;
 		replacements.push(createReplacement(adjective.text, newWord));
 		return true;
