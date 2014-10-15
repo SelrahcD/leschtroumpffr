@@ -33,7 +33,6 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 		// 	ADV: 0.6,
 		// 	NC: 0.9,
 		// 	ADJ: 1,
-		// 	NPP: 1.3 // This is bullshit. We can't get here... Just a reminder we shoudl handle that type
 		// },
 		allowed = ['V', 'VPP', 'VPR', 'VINF', 'ADV', 'NC', 'ADJ'],
 		tokenCount = tokens.length;
@@ -73,6 +72,8 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 	if(replacements.length === 0) {
 		throw new Error("No replacements");
 	}
+
+	console.log(replacements);
 
 	return replacements;
 
@@ -154,16 +155,17 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 			return false;
 		}
 
-		// If previous token is j' change it to je
-		if(previousToken && previousToken.text.toLowerCase() === "j'") {
-			replacements.push(createReplacement(previousToken.text, previousToken.text[0] + 'e '));
+		if(previousToken.text.toLowerCase() === "c'") {
+			return false;
 		}
 
+		
 		if(verb.subtype === 'VINF') {
 			replacements.push(createReplacement(verb.text, self.language.inf));
 			return true;
 		}
 
+		var newWord = null;
 		if(verb.subtype === 'VPP') {
 			var g = 'm',
 				n = 's';
@@ -178,17 +180,11 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 				g = 'f';
 			}
 
-			replacements.push(createReplacement(verb.text, self.language['vpp_' + n + '_' + g]));
-			return true;
+			newWord =  self.language['vpp_' + n + '_' + g];
 		}
 
 		if(verb.subtype === 'VPR') {
-			replacements.push(createReplacement(verb.text, self.language.pp));
-			return true;
-		}
-
-		if(previousToken.text.toLowerCase() === "c'") {
-			return false;
+			newWord = self.language.pp;
 		}
 
 		if(typeof self.language[verb.data.m] !== 'undefined' 
@@ -198,9 +194,18 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 			if(verb.data.n === 'p') {
 				p += 3;
 			}
-			replacements.push(createReplacement(verb.text, self.language[verb.data.m][verb.data.t][p]));
-			return true;
+			newWord = self.language[verb.data.m][verb.data.t][p];
 		}
+
+		// If previous token is j' change it to je
+		if(previousToken && previousToken.text.toLowerCase() === "j'") {
+			replacements.push(createReplacement(previousToken.text + verb.text, previousToken.text[0] + 'e ' + newWord));
+		}
+		else {
+			replacements.push(createReplacement(verb.text, newWord));
+		}
+
+		return true;
 	}
 
 	function handleNoun(noun, replacements, previousToken, antepToken) {
@@ -215,17 +220,23 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 
 		// De l' => Du
 		if(previousToken && antepToken && previousToken.text.toLowerCase() === "l\'" && antepToken.text.toLowerCase() === 'de') {
-			replacements.push(createReplacement(antepToken.text, antepToken.text[0] + 'u'));
-			replacements.push(createReplacement(previousToken.text, ''));
+			var newWord = noun.data.n === 'p' ? self.language.np : self.language.ns;
+			replacements.push(createReplacement(antepToken.text + previousToken.text + noun.text, antepToken.text[0] + 'u ' + newWord));
+			return true;
 		}
 		// l' => le / la
-		else if(previousToken && previousToken.text.toLowerCase() === "l'") {
-			replacements.push(createReplacement(previousToken.text, previousToken.base + ' ')); // Not bullet proof for genre detection...
+		else if(previousToken && previousToken.text.toLowerCase() === "l\'") {
+			// replacements.push(createReplacement("l'", previousToken.base + ' ')); // Not bullet proof for genre detection...
+			var newWord = noun.data.n === 'p' ? self.language.np : self.language.ns;
+			replacements.push(createReplacement(previousToken.text + noun.text, previousToken.base + ' ' + newWord));
+			return true;
 		}
 		// d' => de
-		else if(previousToken && previousToken.text.toLowerCase() === "d'")
+		else if(previousToken && previousToken.text.toLowerCase() === "d\'")
 		{
-			replacements.push(createReplacement(previousToken.text, previousToken.base + ' '));
+			var newWord = noun.data.n === 'p' ? self.language.np : self.language.ns;
+			replacements.push(createReplacement(previousToken.text + noun.text, previousToken.base + ' ' + newWord));
+			return true;
 		}
 
 		var newWord = noun.data.n === 'p' ? self.language.np : self.language.ns;
@@ -253,6 +264,9 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 		if(oldWord[0] === oldWord[0].toUpperCase()) {
 			newWord = newWord.charAt(0).toUpperCase() + newWord.substring(1)
 		}
+
+		oldWord = oldWord.replace("'", "’");
+
 		return {
 			oldWord: oldWord,
 			newWord: newWord

@@ -2,7 +2,7 @@ var Shtroumpsify = require('./schtroumpsify');
 
 var schtroumpsifier = new Shtroumpsify();
 
-var text = 'Le tigre de Poutine s’est fait la belle en Chine'; 
+var text = "j'aime les chats"; 
 schtroumpsifier.transform(text).then(function(text) {
 	console.log(text);
 });
