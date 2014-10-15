@@ -164,7 +164,7 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 
 		
 		if(verb.subtype === 'VINF') {
-			replacements.push(createReplacement(verb.text, self.language.inf));
+			addReplacement(replacements, verb.text, self.language.inf);
 			return true;
 		}
 
@@ -202,10 +202,10 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 
 		// If previous token is j' change it to je
 		if(previousToken && previousToken.text.toLowerCase() === "j'") {
-			replacements.push(createReplacement(previousToken.text + verb.text, previousToken.text[0] + 'e ' + newWord));
+			addReplacement(replacements, previousToken.text + verb.text, previousToken.text[0] + 'e ' + newWord);
 		}
 		else {
-			replacements.push(createReplacement(verb.text, newWord));
+			addReplacement(replacements, verb.text, newWord);
 		}
 
 		return true;
@@ -224,26 +224,25 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 		// De l' => Du
 		if(previousToken && antepToken && previousToken.text.toLowerCase() === "l\'" && antepToken.text.toLowerCase() === 'de') {
 			var newWord = noun.data.n === 'p' ? self.language.np : self.language.ns;
-			replacements.push(createReplacement(antepToken.text + previousToken.text + noun.text, antepToken.text[0] + 'u ' + newWord));
+			addReplacement(replacements, antepToken.text + previousToken.text + noun.text, antepToken.text[0] + 'u ' + newWord);
 			return true;
 		}
 		// l' => le / la
 		else if(previousToken && previousToken.text.toLowerCase() === "l\'") {
-			// replacements.push(createReplacement("l'", previousToken.base + ' ')); // Not bullet proof for genre detection...
 			var newWord = noun.data.n === 'p' ? self.language.np : self.language.ns;
-			replacements.push(createReplacement(previousToken.text + noun.text, previousToken.base + ' ' + newWord));
+			addReplacement(replacements, previousToken.text + noun.text, previousToken.base + ' ' + newWord);
 			return true;
 		}
 		// d' => de
 		else if(previousToken && previousToken.text.toLowerCase() === "d\'")
 		{
 			var newWord = noun.data.n === 'p' ? self.language.np : self.language.ns;
-			replacements.push(createReplacement(previousToken.text + noun.text, previousToken.base + ' ' + newWord));
+			addReplacement(replacements, previousToken.text + noun.text, previousToken.base + ' ' + newWord);
 			return true;
 		}
 
 		var newWord = noun.data.n === 'p' ? self.language.np : self.language.ns;
-		replacements.push(createReplacement(noun.text, newWord));
+		addReplacement(replacements, noun.text, newWord);
 		return true;
 	}
 
@@ -277,28 +276,45 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 			newWord = adjective.data.n === 'p' ? self.language.ap : self.language.as;
 		}
 
-		replacements.push(createReplacement(adjective.text, newWord));
+		addReplacement(replacements, adjective.text, newWord);
 		return true;
 	}
 
 	function handleAdverbe(adverbe, replacements) {
 		if(adverbe.text.indexOf('ement') > -1) {	
-			replacements.push(createReplacement(adverbe.text, self.language.adv));
+			addReplacement(replacements, adverbe.text, self.language.adv);
 			return true;
 		}
 	}
 
-	function createReplacement(oldWord, newWord) {
+	function addReplacement(replacements, oldWord, newWord) {
 		if(oldWord[0] === oldWord[0].toUpperCase()) {
 			newWord = newWord.charAt(0).toUpperCase() + newWord.substring(1)
 		}
 
-		oldWord = oldWord.replace("'", "’");
-
-		return {
+		replacements.push({
 			oldWord: oldWord,
 			newWord: newWord
+		});
+
+		if(oldWord.indexOf("'") > -1) {
+			oldWord = oldWord.replace("'", "’");
+
+			replacements.push({
+				oldWord: oldWord,
+				newWord: newWord
+			});
 		}
+
+		if(oldWord.indexOf("’") > -1) {
+			oldWord = oldWord.replace("’", "'");
+
+			replacements.push({
+				oldWord: oldWord,
+				newWord: newWord
+			});
+		}
+
 	}
 };
 
