@@ -259,8 +259,10 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 	}
 
 	function handleAdverbe(adverbe, replacements) {
-		replacements.push(createReplacement(adverbe.text, self.language.adv));
-		return true;
+		if(adverbe.text.indexOf('ement') > -1) {	
+			replacements.push(createReplacement(adverbe.text, self.language.adv));
+			return true;
+		}
 	}
 
 	function createReplacement(oldWord, newWord) {
