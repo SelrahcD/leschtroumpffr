@@ -163,13 +163,12 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 		}
 
 		
+		var newWord = null;
 		if(verb.subtype === 'VINF') {
-			addReplacement(replacements, verb.text, preTreatment(verb.text, newWord));
-			return true;
+			newWord = self.language.inf;
 		}
 
-		var newWord = null;
-		if(verb.subtype === 'VPP') {
+		if(!newWord && verb.subtype === 'VPP') {
 			var g = 'm',
 				n = 's';
 
@@ -186,11 +185,11 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 			newWord =  self.language['vpp_' + n + '_' + g];
 		}
 
-		if(verb.subtype === 'VPR') {
+		if(!newWord && verb.subtype === 'VPR') {
 			newWord = self.language.pp;
 		}
 
-		if(typeof self.language[verb.data.m] !== 'undefined' 
+		if(!newWord && typeof self.language[verb.data.m] !== 'undefined' 
 			&& typeof self.language[verb.data.m][verb.data.t] !== 'undefined' 
 			&& typeof self.language[verb.data.m][verb.data.t][verb.data.p] !== 'undefined') {
 			var p = parseInt(verb.data.p);
