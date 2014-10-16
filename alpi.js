@@ -97,6 +97,9 @@ RemoteParseur.prototype.parse = function(text) {
 	var crochayRegex = /\[.+\]/g;
 	text = text.replace(crochayRegex, '');
 
+	var parRegex = /par[ @a-zA-Z]+/g;
+	text = text.replace(parRegex, '');
+
 	form = r.form();
 	form.append('grammar', 'frmgtel');
 	form.append('forest', 'conll'); 
