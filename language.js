@@ -16,9 +16,9 @@ module.exports = {
 	vpp_p_f: 'schtroumpfées',
 	ind: {
 		pst: {
-			1: 'schtroumpf',
+			1: 'schtroumpfe',
 			2: 'schtroumpfes',
-			3: 'schtroumpf',
+			3: 'schtroumpfe',
 			4: 'schtroumpfons',
 			5: 'schtroumpfez',
 			6: 'schtroumpfent'
