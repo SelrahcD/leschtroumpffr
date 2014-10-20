@@ -189,6 +189,7 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 			newWord = self.language.pp;
 		}
 
+
 		if(!newWord && typeof self.language[verb.data.m] !== 'undefined' 
 			&& typeof self.language[verb.data.m][verb.data.t] !== 'undefined' 
 			&& typeof self.language[verb.data.m][verb.data.t][verb.data.p] !== 'undefined') {
@@ -196,15 +197,21 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 			if(verb.data.n === 'p') {
 				p += 3;
 			}
-			newWord = self.language[verb.data.m][verb.data.t][p];
+
+			if(verb.data.m === 'imp' && verb.data.m === 'cond') {
+				newWord = self.language[verb.data.m][p];
+			}
+			else {
+				newWord = self.language[verb.data.m][verb.data.t][p];
+			}
 		}
 
 		// If previous token is j' change it to je
 		if(previousToken && previousToken.text.toLowerCase() === "j'") {
-			addReplacement(replacements, previousToken.text + verb.text, previousToken.text[0] + 'e ' + preTreatment(verb.text, newWord));
+			addReplacement(replacements, previousToken.text + verb.text, preTreatment(previousToken.text,  + 'je ') + preTreatment(verb.text, newWord));
 		}
 		else if(previousToken && previousToken.text.toLowerCase() === "s'") {
-			addReplacement(replacements, previousToken.text + verb.text, previousToken.text[0] + 'e ' + preTreatment(verb.text, newWord));
+			addReplacement(replacements, previousToken.text + verb.text, preTreatment(previousToken.text, 'se ') + preTreatment(verb.text, newWord));
 		}
 		else {
 			addReplacement(replacements, verb.text, preTreatment(verb.text, newWord));
