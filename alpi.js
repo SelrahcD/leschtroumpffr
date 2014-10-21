@@ -100,6 +100,7 @@ RemoteParseur.prototype.parse = function(text) {
 	var parRegex = /par[ @a-zA-Z]+/g;
 	text = text.replace(parRegex, '');
 
+	console.log(text);
 	form = r.form();
 	form.append('grammar', 'frmgtel');
 	form.append('forest', 'conll'); 
