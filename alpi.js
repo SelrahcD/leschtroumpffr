@@ -97,7 +97,7 @@ RemoteParseur.prototype.parse = function(text) {
 	var crochayRegex = /\[.+\]/g;
 	text = text.replace(crochayRegex, '');
 
-	var parRegex = /par[ @a-zA-Z]+/g;
+	var parRegex = /\(?par[ @a-zA-Z]+\)?/g;
 	text = text.replace(parRegex, '');
 
 	console.log(text);
