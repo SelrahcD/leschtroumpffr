@@ -198,8 +198,13 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 				p += 3;
 			}
 
-			if(verb.data.m === 'imp' && verb.data.m === 'cond') {
-				newWord = self.language[verb.data.m][p];
+			if(verb.data.m === 'imp' && verb.data.m === 'cond' || verb.data.t === 'imp' && verb.data.t === 'cond') {
+				var selector = verb.data.m;
+				if(!selector) {
+					selector = verb.data.t;
+				}
+
+				newWord = self.language[selector][p];
 			}
 			else {
 				newWord = self.language[verb.data.m][verb.data.t][p];
