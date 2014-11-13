@@ -272,7 +272,7 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 		return true;
 	}
 
-	function handleAdjective(adjective, replacements) {
+	function handleAdjective(adjective, replacements, previousToken) {
 		
 		if(!isNaN(adjective.text)) {
 			return false;
@@ -300,6 +300,17 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 		}
 		else {
 			newWord = adjective.data.n === 'p' ? self.language.ap : self.language.as;
+		}
+
+		if(previousToken && previousToken.text.toLowerCase() === "l\'") {
+			addReplacement(replacements, previousToken.text + noun.text, preTreatment(previousToken.text, previousToken.base) + ' ' + preTreatment(noun.text, newWord));
+			return true;
+		}
+		// d' => de
+		else if(previousToken && previousToken.text.toLowerCase() === "d\'")
+		{
+			addReplacement(replacements, previousToken.text  + noun.text, preTreatment(previousToken.text, previousToken.base) + ' ' + preTreatment(noun.text, newWord));
+			return true;
 		}
 
 		addReplacement(replacements, adjective.text, preTreatment(adjective.text, newWord));
