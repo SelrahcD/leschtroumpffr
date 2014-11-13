@@ -47,7 +47,8 @@ RemoteParseur.prototype.parse = function(text) {
 			analyse = $('pre').text();
 
 			if(analyse === '') {
-				throw new Error("Wrong text", analyse);
+				console.log("Wrong text");
+				throw new Error("Wrong text");
 			}
 
 			var lines = analyse.match(/[^\n]+/g);

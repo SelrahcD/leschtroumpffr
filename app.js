@@ -15,10 +15,10 @@ twitterClient.stream('statuses/filter', {follow: [24744541]}).on('tweet', functi
 		    	// tweet
 		    	console.log(text);
 		    	twitterClient.post('statuses/update', { status: text }, function(err, data, response) {
-					  // console.log(data)
 				});
 		    },
-		    function() {
+		    function(a) {
+		    	console.log(a);
 		    	console.log('Fail on ' + tweet.text);
 		    });
 		}
