@@ -329,6 +329,9 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 			newWord = newWord.charAt(0).toUpperCase() + newWord.substring(1)
 		}
 
+		oldWord = ' ' + oldWord;
+		newWord = ' ' + newWord;
+
 		replacements.push({
 			oldWord: oldWord,
 			newWord: newWord
