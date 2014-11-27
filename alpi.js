@@ -46,6 +46,7 @@ RemoteParseur.prototype.parse = function(text) {
     	var $ = cheerio.load(utf8String)
 			analyse = $('pre').text();
 
+			console.log(analyse);
 			if(analyse === '') {
 				console.log("Wrong text");
 				throw new Error("Wrong text");
