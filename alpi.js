@@ -48,7 +48,7 @@ RemoteParseur.prototype.parse = function(text) {
 
 			console.log(analyse);
 			if(analyse === '') {
-				console.log("Wrong text");
+				console.log("Wrong text", text);
 				throw new Error("Wrong text");
 			}
 
