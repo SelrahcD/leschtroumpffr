@@ -242,9 +242,9 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 			return true;
 		}
 		// à le/la => au
-		else if(previousToken && antepToken && (previousToken.text.toLowerCase() === "le" || previousToken.text.toLowerCase() === "la") && antepToken.text.toLowerCase() === 'à') {
+		else if(previousToken && antepToken && (previousToken.text.toLowerCase() === "l\'") && antepToken.text.toLowerCase() === 'à') {
 			var newWord = noun.data.n === 'p' ? self.language.np : self.language.ns;
-			addReplacement(replacements, antepToken.text + ' ' + previousToken.text + ' ' + noun.text, preTreatment(antepToken.text, 'au ') + preTreatment(noun.text, newWord));
+			addReplacement(replacements, antepToken.text + ' ' + previousToken.text + noun.text, preTreatment(antepToken.text, 'au ') + preTreatment(noun.text, newWord));
 			return true;
 		}
 		// à les => aux
@@ -326,11 +326,8 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 
 	function addReplacement(replacements, oldWord, newWord) {
 		if(oldWord[0] === oldWord[0].toUpperCase()) {
-			newWord = newWord.charAt(0).toUpperCase() + newWord.substring(1)
+			newWord = newWord.charAt(0).toUpperCase() + newWord.substring(1);
 		}
-
-		oldWord = ' ' + oldWord;
-		newWord = ' ' + newWord;
 
 		replacements.push({
 			oldWord: oldWord,
