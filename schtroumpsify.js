@@ -218,6 +218,9 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 		else if(previousToken && previousToken.text.toLowerCase() === "s'") {
 			addReplacement(replacements, previousToken.text + verb.text, preTreatment(previousToken.text, 'se ') + preTreatment(verb.text, newWord));
 		}
+		else if(previousToken && previousToken.text.toLowerCase() === "n'") {
+			addReplacement(replacements, previousToken.text + verb.text, preTreatment(previousToken.text, 'ne ') + preTreatment(verb.text, newWord));
+		}
 		else {
 			addReplacement(replacements, verb.text, preTreatment(verb.text, newWord));
 		}
