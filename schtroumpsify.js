@@ -153,6 +153,7 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 			time,
 			person;
 
+			console.log(verb);
 		// If next verb is VPP use it instead of current one.
 		if(nextToken && (nextToken.subtype === 'VPP' || nextToken.subtype === 'VINF')) {
 			return false;
@@ -189,16 +190,14 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 			newWord = self.language.pp;
 		}
 
+		if(!newWord) {
 
-		if(!newWord && typeof self.language[verb.data.m] !== 'undefined' 
-			&& typeof self.language[verb.data.m][verb.data.t] !== 'undefined' 
-			&& typeof self.language[verb.data.m][verb.data.t][verb.data.p] !== 'undefined') {
 			var p = parseInt(verb.data.p);
 			if(verb.data.n === 'p') {
 				p += 3;
 			}
 
-			if(verb.data.m === 'imp' && verb.data.m === 'cond' || verb.data.t === 'imp' && verb.data.t === 'cond') {
+			if(verb.data.t === 'imp' || verb.data.t === 'cond') {
 				var selector = verb.data.m;
 				if(!selector) {
 					selector = verb.data.t;
