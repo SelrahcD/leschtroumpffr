@@ -14,8 +14,14 @@ twitterClient.stream('statuses/filter', {follow: [24744541]}).on('tweet', functi
 	    	
 		    	// tweet
 		    	console.log(text);
-		    	twitterClient.post('statuses/update', { status: text }, function(err, data, response) {
-				});
+		    	if(text.indexOf('schtrou') > -1) {
+		    		console.log('Twitted');
+		    		twitterClient.post('statuses/update', { status: text }, function(err, data, response) {
+						});
+		    	}
+		    	else {
+		    		console.log('No schtrou');
+		    	}
 		    },
 		    function(a) {
 		    	console.log(a);
