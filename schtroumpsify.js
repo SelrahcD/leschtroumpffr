@@ -237,39 +237,35 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 			return false;
 		}
 
+    var newWord = noun.base !== noun.text ? self.language.np : self.language.ns;
+
 		// De l' => Du
 		if(previousToken && antepToken && previousToken.text.toLowerCase() === "l\'" && antepToken.text.toLowerCase() === 'de') {
-			var newWord = noun.data.n === 'p' ? self.language.np : self.language.ns;
 			addReplacement(replacements, antepToken.text + ' ' + previousToken.text + noun.text, preTreatment(antepToken.text, 'du ') + preTreatment(noun.text, newWord));
 			return true;
 		}
 		// à le/la => au
 		else if(previousToken && antepToken && (previousToken.text.toLowerCase() === "l\'") && antepToken.text.toLowerCase() === 'à') {
-			var newWord = noun.data.n === 'p' ? self.language.np : self.language.ns;
 			addReplacement(replacements, antepToken.text + ' ' + previousToken.text + noun.text, preTreatment(antepToken.text, 'au ') + preTreatment(noun.text, newWord));
 			return true;
 		}
 		// à les => aux
 		else if(previousToken && antepToken && previousToken.text.toLowerCase() === "les" && antepToken.text.toLowerCase() === 'à') {
-			var newWord = noun.data.n === 'p' ? self.language.np : self.language.ns;
 			addReplacement(replacements, antepToken.text + ' ' + previousToken.text + ' ' + noun.text, preTreatment(antepToken.text, 'aux ') + preTreatment(noun.text, newWord));
 			return true;
 		}
 		// l' => le / la
 		else if(previousToken && previousToken.text.toLowerCase() === "l\'") {
-			var newWord = noun.data.n === 'p' ? self.language.np : self.language.ns;
 			addReplacement(replacements, previousToken.text + noun.text, preTreatment(previousToken.text, previousToken.base) + ' ' + preTreatment(noun.text, newWord));
 			return true;
 		}
 		// d' => de
 		else if(previousToken && previousToken.text.toLowerCase() === "d\'")
 		{
-			var newWord = noun.data.n === 'p' ? self.language.np : self.language.ns;
 			addReplacement(replacements, previousToken.text  + noun.text, preTreatment(previousToken.text, previousToken.base) + ' ' + preTreatment(noun.text, newWord));
 			return true;
 		}
 
-		var newWord = noun.data.n === 'p' ? self.language.np : self.language.ns;
 		addReplacement(replacements, noun.text, preTreatment(noun.text, newWord));
 		return true;
 	}
