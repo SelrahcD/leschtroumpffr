@@ -237,7 +237,7 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 			return false;
 		}
 
-    var newWord = noun.base !== noun.text ? self.language.np : self.language.ns;
+    var newWord = noun.base !== noun.text && noun.text.slice(-1) === 's'? self.language.np : self.language.ns;
 
 		// De l' => Du
 		if(previousToken && antepToken && previousToken.text.toLowerCase() === "l\'" && antepToken.text.toLowerCase() === 'de') {
