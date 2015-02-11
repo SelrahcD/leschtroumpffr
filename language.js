@@ -7,7 +7,7 @@ module.exports = {
 	a_és: 'schtroumpfés',
 	a_ée: 'schtroumpfée',
 	a_é: 'schtroumpfé',
-	adv: 'schtroufement',
+	adv: 'schtroupfement',
 	inf: 'schtroumpfer',
 	pp: 'schtroumpfant',
 	vpp_s_m: 'schtroumpfé',
