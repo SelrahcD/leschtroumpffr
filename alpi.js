@@ -4,8 +4,8 @@ var Promise = require("node-promise").Promise,
 	http = require('http'),
 	request = require('request'),
 	cheerio = require('cheerio'),
-	iconv = require('iconv-lite'),
-	charsetDetector = require("node-icu-charset-detector");
+	iconv = require('iconv-lite');
+	// charsetDetector = require("node-icu-charset-detector");
 
 function LocalParseur() {
 
@@ -34,38 +34,18 @@ RemoteParseur.prototype.parse = function(text) {
 	console.log('#############################');
 	console.log(text);
 	console.log('#############################');
-		
+
 	var r = request({
-		method: 'post',
-	 	uri: 'http://alpage.inria.fr/alpes/parser.pl',
+		method: 'get',
+	 	uri: 'http://alpage.inria.fr/newparserdemo/process.txt',
 	 	headers: form.getHeaders(),
 	 	encoding: null
 	},
 	function(error, response, body) {
 		var utf8String = iconv.decode(new Buffer(body), "ISO-8859-1");
-    	var $ = cheerio.load(utf8String)
-			analyse = $('pre').text();
-
-			if(analyse === '') {
-				console.log("Wrong text");
-				throw new Error("Wrong text");
-			}
-
-			var lines = analyse.match(/[^\n]+/g);
-			var firstLine = lines.shift();
-			var elements = firstLine.match(/[^\t]+/g);
-			var data = [];
-			elements.forEach(function(d) {
-				var splitted = d.split('=');
-				data[splitted[0]] = splitted[1];
-			});
-
-			if(data.best === 'no') {
-				throw new Error("Data best : no");
-			}
 
 			var tokens = [];
-			lines.forEach(function(line) {
+			utf8String.match(/\n(\d)(.)+/g).forEach(function(line) {
 				var token = {};
 
 				var elements = line.match(/[^\t]+/g);
@@ -101,11 +81,10 @@ RemoteParseur.prototype.parse = function(text) {
 	var parRegex = /\(?par[ @a-zA-Z]+\)?/g;
 	text = text.replace(parRegex, '');
 
-	console.log(text);
 	form = r.form();
-	form.append('grammar', 'frmgtel');
-	form.append('forest', 'conll'); 
 	form.append('sentence', text);
+    form.append('schema', 'depconll');
+	form.append('options','conll');
 
 	return promise;
 };

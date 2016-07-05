@@ -10,8 +10,8 @@ twitterClient.stream('statuses/filter', {follow: [24744541]}).on('tweet', functi
 		console.log(tweet.text);
 
 		try {
-			schtroumpsifier.transform(tweet.text).then(function(text) {
-	    	
+			schtroumpsifier.transform("On ne change pas, on met juste les costumes d'autres sur soi.").then(function(text) {
+
 		    	// tweet
 		    	console.log(text);
 		    	twitterClient.post('statuses/update', { status: text }, function(err, data, response) {
@@ -25,6 +25,6 @@ twitterClient.stream('statuses/filter', {follow: [24744541]}).on('tweet', functi
 		catch(e) {
 			console.log(e.message);
 		}
-	    
+
 	}
 });
