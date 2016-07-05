@@ -153,6 +153,7 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 			time,
 			person;
 
+			console.log(verb);
 		// If next verb is VPP use it instead of current one.
 		if(nextToken && (nextToken.subtype === 'VPP' || nextToken.subtype === 'VINF')) {
 			return false;
@@ -189,16 +190,14 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 			newWord = self.language.pp;
 		}
 
+		if(!newWord) {
 
-		if(!newWord && typeof self.language[verb.data.m] !== 'undefined' 
-			&& typeof self.language[verb.data.m][verb.data.t] !== 'undefined' 
-			&& typeof self.language[verb.data.m][verb.data.t][verb.data.p] !== 'undefined') {
 			var p = parseInt(verb.data.p);
 			if(verb.data.n === 'p') {
 				p += 3;
 			}
 
-			if(verb.data.m === 'imp' && verb.data.m === 'cond' || verb.data.t === 'imp' && verb.data.t === 'cond') {
+			if(verb.data.t === 'imp' || verb.data.t === 'cond') {
 				var selector = verb.data.m;
 				if(!selector) {
 					selector = verb.data.t;
@@ -218,6 +217,9 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 		else if(previousToken && previousToken.text.toLowerCase() === "s'") {
 			addReplacement(replacements, previousToken.text + verb.text, preTreatment(previousToken.text, 'se ') + preTreatment(verb.text, newWord));
 		}
+		else if(previousToken && previousToken.text.toLowerCase() === "n'") {
+			addReplacement(replacements, previousToken.text + verb.text, preTreatment(previousToken.text, 'ne ') + preTreatment(verb.text, newWord));
+		}
 		else {
 			addReplacement(replacements, verb.text, preTreatment(verb.text, newWord));
 		}
@@ -235,39 +237,35 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 			return false;
 		}
 
+    var newWord = noun.base !== noun.text && noun.text.slice(-1) === 's'? self.language.np : self.language.ns;
+
 		// De l' => Du
 		if(previousToken && antepToken && previousToken.text.toLowerCase() === "l\'" && antepToken.text.toLowerCase() === 'de') {
-			var newWord = noun.data.n === 'p' ? self.language.np : self.language.ns;
 			addReplacement(replacements, antepToken.text + ' ' + previousToken.text + noun.text, preTreatment(antepToken.text, 'du ') + preTreatment(noun.text, newWord));
 			return true;
 		}
 		// à le/la => au
-		else if(previousToken && antepToken && (previousToken.text.toLowerCase() === "le" || previousToken.text.toLowerCase() === "la") && antepToken.text.toLowerCase() === 'à') {
-			var newWord = noun.data.n === 'p' ? self.language.np : self.language.ns;
-			addReplacement(replacements, antepToken.text + ' ' + previousToken.text + ' ' + noun.text, preTreatment(antepToken.text, 'au ') + preTreatment(noun.text, newWord));
+		else if(previousToken && antepToken && (previousToken.text.toLowerCase() === "l\'") && antepToken.text.toLowerCase() === 'à') {
+			addReplacement(replacements, antepToken.text + ' ' + previousToken.text + noun.text, preTreatment(antepToken.text, 'au ') + preTreatment(noun.text, newWord));
 			return true;
 		}
 		// à les => aux
 		else if(previousToken && antepToken && previousToken.text.toLowerCase() === "les" && antepToken.text.toLowerCase() === 'à') {
-			var newWord = noun.data.n === 'p' ? self.language.np : self.language.ns;
 			addReplacement(replacements, antepToken.text + ' ' + previousToken.text + ' ' + noun.text, preTreatment(antepToken.text, 'aux ') + preTreatment(noun.text, newWord));
 			return true;
 		}
 		// l' => le / la
 		else if(previousToken && previousToken.text.toLowerCase() === "l\'") {
-			var newWord = noun.data.n === 'p' ? self.language.np : self.language.ns;
 			addReplacement(replacements, previousToken.text + noun.text, preTreatment(previousToken.text, previousToken.base) + ' ' + preTreatment(noun.text, newWord));
 			return true;
 		}
 		// d' => de
 		else if(previousToken && previousToken.text.toLowerCase() === "d\'")
 		{
-			var newWord = noun.data.n === 'p' ? self.language.np : self.language.ns;
 			addReplacement(replacements, previousToken.text  + noun.text, preTreatment(previousToken.text, previousToken.base) + ' ' + preTreatment(noun.text, newWord));
 			return true;
 		}
 
-		var newWord = noun.data.n === 'p' ? self.language.np : self.language.ns;
 		addReplacement(replacements, noun.text, preTreatment(noun.text, newWord));
 		return true;
 	}
@@ -326,7 +324,7 @@ Schtroumpsifier.prototype.schtroumpfThis = function(tokens) {
 
 	function addReplacement(replacements, oldWord, newWord) {
 		if(oldWord[0] === oldWord[0].toUpperCase()) {
-			newWord = newWord.charAt(0).toUpperCase() + newWord.substring(1)
+			newWord = newWord.charAt(0).toUpperCase() + newWord.substring(1);
 		}
 
 		replacements.push({
