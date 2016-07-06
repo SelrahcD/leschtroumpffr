@@ -31,6 +31,7 @@ RemoteParseur.prototype.parse = function(text) {
 	var promise = new Promise(),
 		form = new FormData();
 
+
 	console.log('#############################');
 	console.log(text);
 	console.log('#############################');
@@ -39,13 +40,11 @@ RemoteParseur.prototype.parse = function(text) {
 		method: 'get',
 	 	uri: 'http://alpage.inria.fr/newparserdemo/process.txt',
 	 	headers: form.getHeaders(),
-	 	encoding: null
+	 	encoding: 'UTF-8'
 	},
 	function(error, response, body) {
-		var utf8String = iconv.decode(new Buffer(body), "ISO-8859-1");
-
 			var tokens = [];
-			utf8String.match(/\n(\d)(.)+/g).forEach(function(line) {
+			body.match(/\n(\d)(.)+/g).forEach(function(line) {
 				var token = {};
 
 				var elements = line.match(/[^\t]+/g);
@@ -80,6 +79,9 @@ RemoteParseur.prototype.parse = function(text) {
 
 	var parRegex = /\(?par[ @a-zA-Z]+\)?/g;
 	text = text.replace(parRegex, '');
+
+	var parRegex = /\’\)?/g;
+	text = text.replace(parRegex, "'");
 
 	form = r.form();
 	form.append('sentence', text);
