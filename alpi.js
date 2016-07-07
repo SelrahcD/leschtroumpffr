@@ -43,8 +43,14 @@ RemoteParseur.prototype.parse = function(text) {
 	 	encoding: 'UTF-8'
 	},
 	function(error, response, body) {
-			var tokens = [];
-			body.match(/\n(\d)(.)+/g).forEach(function(line) {
+			var tokens = [],
+				cleanString = body.match(/\n(\d)(.)+/g);
+
+				if(!cleanString) {
+					return false;
+				}
+
+				cleanString.forEach(function(line) {
 				var token = {};
 
 				var elements = line.match(/[^\t]+/g);
