@@ -46,6 +46,8 @@ RemoteParseur.prototype.parse = function(text) {
 			var tokens = [],
 				cleanString = body.match(/\n(\d)(.)+/g);
 
+                console.log(cleanString);
+
 				if(!cleanString) {
 					return false;
 				}
