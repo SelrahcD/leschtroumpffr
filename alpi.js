@@ -43,6 +43,7 @@ RemoteParseur.prototype.parse = function(text) {
 	 	encoding: 'UTF-8'
 	},
 	function(error, response, body) {
+        console.log(body);
 			var tokens = [],
 				cleanString = body.match(/\n(\d)(.)+/g);
 
